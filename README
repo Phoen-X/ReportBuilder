@@ -1,1 +1,2 @@
-This file was created by IntelliJ IDEA (Community Edition) IC-120.152 for binding GitHub repository
+This is a library for creating simple reports from Object arrays with data.
+Library produces creation reports in different formats: CSV, XLS, XML etc.
