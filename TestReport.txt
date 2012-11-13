@@ -1,0 +1,5 @@
+целое число,булевое значение,String Field
+1,false,test1
+11,false,test2
+-1,false,test3
+2,false,test4
