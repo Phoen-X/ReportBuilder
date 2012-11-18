@@ -1,2 +1,3 @@
-This is a library for creating simple reports from Object arrays with data.
-Library produces creation reports in different formats: CSV, XLS, XML etc.
+Вспомогательная библиотека 
+для генерации простых табличных отчетностей 
+в различных форматах
