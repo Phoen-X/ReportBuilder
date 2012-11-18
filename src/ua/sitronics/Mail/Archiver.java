@@ -13,11 +13,16 @@ import java.util.zip.ZipOutputStream;
  */
 public class Archiver
 {
-    ArrayList<File> files = new ArrayList<File>();
+    ArrayList<File> files = new ArrayList<File>(1);
 
     public Archiver(ArrayList<File> files)
     {
         this.files = files;
+    }
+
+    public Archiver(File file)
+    {
+        files.add(file);
     }
 
     public ArrayList<File> getFiles()
