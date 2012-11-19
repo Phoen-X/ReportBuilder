@@ -1,13 +1,15 @@
 package ua.sitronics.Report.Tests;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import ua.sitronics.Help.Encoding;
 import ua.sitronics.Help.ReportFormat;
 import ua.sitronics.Report.CsvReport;
 import ua.sitronics.Report.ReportBuilder;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -64,6 +66,7 @@ public class ReportTest
 		}
 
 		CsvReport rep = (CsvReport) ReportBuilder.getReport(ReportFormat.CSV, map);
+
         // тестовые данные
 		ArrayList<GetterTestClass> list = new ArrayList<GetterTestClass>();
 		list.add(new GetterTestClass("test1", 1));
@@ -88,5 +91,7 @@ public class ReportTest
         
         String header = reportRows.get(0);
 
+        reader.close();
+        repFile.delete();
 	}
 }
