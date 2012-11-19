@@ -44,21 +44,32 @@ public class Archiver
         byte[] bytes = new byte[4096];
         int bytesRead;
 
-        for (File file : files)
+        try
         {
-            //пропускаем неподходящие нам файлы
-            if (file == null || !file.exists() || !file.isFile() || !file.canRead())
-                continue;
-            ZipEntry entry = new ZipEntry(file.getName());
-            zip.putNextEntry(entry);
-            FileInputStream reader = new FileInputStream(file);
-            while ((bytesRead = reader.read(bytes)) != -1)
+            for (File file : files)
             {
-                zip.write(bytes,0,bytesRead);
+                //пропускаем неподходящие нам файлы
+                if (file == null || !file.exists() || !file.isFile() || !file.canRead())
+                    continue;
+                ZipEntry entry = new ZipEntry(file.getName());
+                zip.putNextEntry(entry);
+                FileInputStream reader = new FileInputStream(file);
+                while ((bytesRead = reader.read(bytes)) != -1)
+                {
+                    zip.write(bytes,0,bytesRead);
+                }
+                reader.close();
             }
-            reader.close();
         }
-        zip.flush();
-        zip.close();
+        catch (IOException e)
+        {
+            throw new IOException("An error while creating archive: " + e.getLocalizedMessage());
+        }
+        finally
+        {
+            zip.flush();
+            zip.close();
+        }
+
     }
 }

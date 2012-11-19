@@ -3,7 +3,10 @@ package ua.sitronics.Report;
 import ua.sitronics.Help.Encoding;
 import ua.sitronics.Help.ReflectionHelp;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -18,6 +21,8 @@ import java.util.LinkedList;
 public class CsvReport extends SimpleReport
 {
 	private String divider = ",";
+    private PrintWriter writer;
+
 
     public CsvReport(LinkedHashMap<String, String> map)
     {
@@ -27,6 +32,19 @@ public class CsvReport extends SimpleReport
     public CsvReport(LinkedHashMap<String, String> fieldData, Encoding encoding)
     {
         super(fieldData, encoding);
+    }
+
+    @Override
+    protected void after()
+    {
+        writer.flush();
+        writer.close();
+    }
+
+    @Override
+    protected void prepare(File file) throws FileNotFoundException, UnsupportedEncodingException
+    {
+        writer = new PrintWriter(file, encoding.getValue());
     }
 
     public String getDivider()
@@ -39,7 +57,7 @@ public class CsvReport extends SimpleReport
         this.divider = divider;
 	}
 
-	protected void writeData(PrintWriter writer, ArrayList data) throws InvocationTargetException,
+	protected void writeData(ArrayList data) throws InvocationTargetException,
 	NoSuchMethodException, NoSuchFieldException, IllegalAccessException
 	{
 
@@ -65,7 +83,7 @@ public class CsvReport extends SimpleReport
 	}
 
 
-	protected void writeHeader(PrintWriter writer)
+	protected void writeHeader()
 	{
 		StringBuilder hdr = new StringBuilder();
 		for (String header : headers)
@@ -78,8 +96,7 @@ public class CsvReport extends SimpleReport
 		writer.println(hdr.toString());
 	}
 
-    @Override
-    protected void writeFooter(PrintWriter writer)
+    protected void writeFooter(ArrayList data)
     {
 
     }

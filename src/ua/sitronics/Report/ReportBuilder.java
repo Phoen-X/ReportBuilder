@@ -17,6 +17,7 @@ public class ReportBuilder
         switch (format)
         {
             case CSV: return new CsvReport(fieldMap);
+            case XLS: return new ExcelReport(fieldMap);
         }
         return null;
     }

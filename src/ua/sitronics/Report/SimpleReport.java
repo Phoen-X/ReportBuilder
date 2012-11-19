@@ -4,7 +4,6 @@ import ua.sitronics.Help.Encoding;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -64,19 +63,26 @@ public abstract class SimpleReport implements Report
 
     public void create(File file, ArrayList data) throws IOException, InvocationTargetException, NoSuchMethodException, NoSuchFieldException, IllegalAccessException
     {
-        PrintWriter writer = new PrintWriter(file, encoding.getValue());
-
-        writeHeader(writer);
-        writeData(writer, data);
-        writeFooter(writer);
-
-        writer.flush();
-        writer.close();
+        prepare(file);
+        try
+        {
+            writeHeader();
+            writeData(data);
+            writeFooter(data);
+        }
+        finally
+        {
+            after();
+        }
     }
 
-    protected abstract void writeHeader(PrintWriter writer);
+    protected abstract void after() throws IOException;
 
-    protected abstract void writeFooter(PrintWriter writer);
+    protected abstract void prepare(File file) throws IOException;
 
-    protected abstract void writeData(PrintWriter writer, ArrayList data) throws InvocationTargetException, NoSuchMethodException, NoSuchFieldException, IllegalAccessException;
+    protected abstract void writeHeader();
+
+    protected abstract void writeFooter(ArrayList data);
+
+    protected abstract void writeData(ArrayList data) throws InvocationTargetException, NoSuchMethodException, NoSuchFieldException, IllegalAccessException;
 }
