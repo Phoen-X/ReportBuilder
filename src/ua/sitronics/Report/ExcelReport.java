@@ -1,9 +1,9 @@
 package ua.sitronics.Report;
 
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.usermodel.contrib.HSSFRegionUtil;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.util.RegionUtil;
 import ua.sitronics.Help.ReflectionHelp;
 
 import java.io.File;
@@ -40,9 +40,10 @@ public class ExcelReport extends SimpleReport
     {
         for(int i = 0; i< headers.size(); i++)
         {
-            reportSheet.autoSizeColumn(i);
+            /*reportSheet.autoSizeColumn(i);
             if(reportSheet.getColumnWidth(i) > MAX_COL_WIDTH)
                 reportSheet.setColumnWidth(i, MAX_COL_WIDTH);
+            */
         }
 
         FileOutputStream stream = new FileOutputStream(file);
@@ -121,10 +122,10 @@ public class ExcelReport extends SimpleReport
         }
 
         CellRangeAddress headerRange = new CellRangeAddress(0, 0, 0, headers.size()-1);
-        RegionUtil.setBorderRight(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
-        RegionUtil.setBorderLeft(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
-        RegionUtil.setBorderTop(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
-        RegionUtil.setBorderBottom(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
+        HSSFRegionUtil.setBorderRight(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
+        HSSFRegionUtil.setBorderLeft(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
+        HSSFRegionUtil.setBorderTop(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
+        HSSFRegionUtil.setBorderBottom(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
     }
 
     @Override
@@ -150,10 +151,10 @@ public class ExcelReport extends SimpleReport
                 cell.setCellValue(ReflectionHelp.getValue(item, field).toString());
             }
             CellRangeAddress rowRange = new CellRangeAddress(start, end, 0, fields.size()-1);
-            RegionUtil.setBorderRight(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
-            RegionUtil.setBorderLeft(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
-            RegionUtil.setBorderTop(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
-            RegionUtil.setBorderBottom(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
+            HSSFRegionUtil.setBorderRight(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
+            HSSFRegionUtil.setBorderLeft(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
+            HSSFRegionUtil.setBorderTop(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
+            HSSFRegionUtil.setBorderBottom(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
         }
     }
 
