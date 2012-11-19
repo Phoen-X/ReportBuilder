@@ -1,9 +1,7 @@
 package ua.sitronics.Report;
 
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.usermodel.contrib.HSSFRegionUtil;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.util.CellRangeAddress;
 import ua.sitronics.Help.ReflectionHelp;
 
 import java.io.File;
@@ -115,17 +113,11 @@ public class ExcelReport extends SimpleReport
         int currCell = 0;
         for (String header : headers)
         {
-            HSSFCell cell = headRow.createCell(currCell);
+            HSSFCell cell = headRow.createCell((short) currCell);
             cell.setCellValue(header);
             cell.setCellStyle(headerCellStyle);
             currCell++;
         }
-
-        CellRangeAddress headerRange = new CellRangeAddress(0, 0, 0, headers.size()-1);
-        HSSFRegionUtil.setBorderRight(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
-        HSSFRegionUtil.setBorderLeft(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
-        HSSFRegionUtil.setBorderTop(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
-        HSSFRegionUtil.setBorderBottom(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
     }
 
     @Override
@@ -143,18 +135,13 @@ public class ExcelReport extends SimpleReport
         {
             HSSFRow row = reportSheet.createRow(currentRow++);
 
-            int cellNum = 0;
+            short cellNum = 0;
             for (String field : fields)
             {
                 HSSFCell cell = row.createCell(cellNum++);
                 cell.setCellStyle(dataCellStyle);
                 cell.setCellValue(ReflectionHelp.getValue(item, field).toString());
             }
-            CellRangeAddress rowRange = new CellRangeAddress(start, end, 0, fields.size()-1);
-            HSSFRegionUtil.setBorderRight(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
-            HSSFRegionUtil.setBorderLeft(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
-            HSSFRegionUtil.setBorderTop(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
-            HSSFRegionUtil.setBorderBottom(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
         }
     }
 
