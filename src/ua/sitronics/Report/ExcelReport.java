@@ -156,4 +156,24 @@ public class ExcelReport extends SimpleReport
             RegionUtil.setBorderBottom(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
         }
     }
+
+    public HSSFCellStyle getHeaderCellStyle()
+    {
+        return headerCellStyle;
+    }
+
+    public void setHeaderCellStyle(HSSFCellStyle headerCellStyle)
+    {
+        this.headerCellStyle = headerCellStyle;
+    }
+
+    public HSSFCellStyle getDataCellStyle()
+    {
+        return dataCellStyle;
+    }
+
+    public void setDataCellStyle(HSSFCellStyle dataCellStyle)
+    {
+        this.dataCellStyle = dataCellStyle;
+    }
 }
