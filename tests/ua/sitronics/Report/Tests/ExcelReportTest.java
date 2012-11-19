@@ -84,6 +84,6 @@ public class ExcelReportTest
         Assert.assertEquals("false", row.getCell(1).getStringCellValue());
         Assert.assertEquals("test2", row.getCell(2).getStringCellValue());
 
-        //repFile.delete();
+        repFile.delete();
     }
 }

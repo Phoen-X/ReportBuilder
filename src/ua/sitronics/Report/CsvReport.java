@@ -76,7 +76,7 @@ public class CsvReport extends SimpleReport
 		{
 			if(hdr.length() > 0)
 				hdr.append(divider);
-			hdr.append(ReflectionHelp.getValue(item, field));
+			hdr.append(filter(ReflectionHelp.getValue(item, field).toString()));
 		}
 
 		return hdr.toString();
@@ -111,4 +111,11 @@ public class CsvReport extends SimpleReport
 	{
 		return fields;
 	}
+
+    private String filter(String value)
+    {
+        if(value == null || "null".equals(value))
+            value = "";
+        return value.trim();
+    }
 }
