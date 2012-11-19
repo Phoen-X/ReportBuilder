@@ -20,7 +20,7 @@ import java.util.LinkedList;
  */
 public class CsvReport extends SimpleReport
 {
-	private String divider = ",";
+	private String divider = ",";  // разделитель для CSV файла
     private PrintWriter writer;
 
 
