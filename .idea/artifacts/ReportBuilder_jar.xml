@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="ReportBuilder:jar">
+    <output-path>$PROJECT_DIR$/../Libs/ReportBuilder</output-path>
+    <root id="archive" name="ReportBuilder.jar">
+      <element id="module-output" name="ReportBuilder" />
+      <element id="module-test-output" name="ReportBuilder" />
+      <element id="module-output" name="StringEx" />
+      <element id="module-test-output" name="StringEx" />
+      <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/lib/junit-4.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/lib/junit.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

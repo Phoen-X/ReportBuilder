@@ -1,6 +1,9 @@
 package ua.sitronics.Mail;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -44,6 +47,7 @@ public class Archiver
         for (File file : files)
         {
             ZipEntry entry = new ZipEntry(file.getName());
+            // test
             zip.putNextEntry(entry);
             FileInputStream reader = new FileInputStream(file);
             while ((bytesRead = reader.read(bytes)) != -1)
