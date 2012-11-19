@@ -46,8 +46,10 @@ public class Archiver
 
         for (File file : files)
         {
+            //пропускаем неподходящие нам файлы
+            if (file == null || !file.exists() || !file.isFile() || !file.canRead())
+                continue;
             ZipEntry entry = new ZipEntry(file.getName());
-            // test
             zip.putNextEntry(entry);
             FileInputStream reader = new FileInputStream(file);
             while ((bytesRead = reader.read(bytes)) != -1)
