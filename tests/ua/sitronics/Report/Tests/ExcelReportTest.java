@@ -42,7 +42,7 @@ public class ExcelReportTest
         ExcelReport rep = (ExcelReport) ReportBuilder.getReport(ReportFormat.XLS, map);
         // тестовые данные
         ArrayList<GetterTestClass> list = new ArrayList<GetterTestClass>();
-        list.add(new GetterTestClass("test1", 1));
+        list.add(new GetterTestClass("test1 is test test1 is test test1 is test test1 is test test1 is test test1 is test test1 is test test1 is test test1 is test", 1));
         list.add(new GetterTestClass("test2", 11));
 
         File repFile = new File("TestReport.xls");
@@ -77,13 +77,13 @@ public class ExcelReportTest
         HSSFRow row = sheet.getRow(1); // 1 обьект
         Assert.assertEquals("1", row.getCell(0).getStringCellValue());
         Assert.assertEquals("false", row.getCell(1).getStringCellValue());
-        Assert.assertEquals("test1", row.getCell(2).getStringCellValue());
+        Assert.assertEquals("test1 is test test1 is test test1 is test test1 is test test1 is test test1 is test test1 is test test1 is test test1 is test", row.getCell(2).getStringCellValue());
 
         row = sheet.getRow(2); // 2 обьект
         Assert.assertEquals("11", row.getCell(0).getStringCellValue());
         Assert.assertEquals("false", row.getCell(1).getStringCellValue());
         Assert.assertEquals("test2", row.getCell(2).getStringCellValue());
 
-        repFile.delete();
+        //repFile.delete();
     }
 }

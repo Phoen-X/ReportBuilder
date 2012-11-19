@@ -8,13 +8,13 @@ import java.util.ArrayList;
  * Date: 10.11.12
  * Time: 21:25
  */
-class GetterTestClass
+public class GetterTestClass
 {
 	String stringField;
 	boolean boolField;
 	Boolean BooleanField;
 	int intField;
-	private ArrayList<Integer> arrField;
+	ArrayList<Integer> arrField;
 	ArrayList<Integer> arrFieldWithoutGetter;
 
 	public GetterTestClass()

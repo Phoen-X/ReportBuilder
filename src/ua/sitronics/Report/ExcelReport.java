@@ -1,9 +1,9 @@
 package ua.sitronics.Report;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.RegionUtil;
 import ua.sitronics.Help.ReflectionHelp;
 
 import java.io.File;
@@ -23,8 +23,12 @@ public class ExcelReport extends SimpleReport
 {
     private HSSFWorkbook wb;
     private HSSFSheet reportSheet;
+    private HSSFCellStyle headerCellStyle;
+    private HSSFCellStyle dataCellStyle;
     private File file;
     private int currentRow = 0;
+    private final int COL_WIDTH_MODIFIER = 256;
+    private final int MAX_COL_WIDTH = 40*COL_WIDTH_MODIFIER;
 
     public ExcelReport(LinkedHashMap<String, String> map)
     {
@@ -34,6 +38,13 @@ public class ExcelReport extends SimpleReport
     @Override
     protected void after() throws IOException
     {
+        for(int i = 0; i< headers.size(); i++)
+        {
+            reportSheet.autoSizeColumn(i);
+            if(reportSheet.getColumnWidth(i) > MAX_COL_WIDTH)
+                reportSheet.setColumnWidth(i, MAX_COL_WIDTH);
+        }
+
         FileOutputStream stream = new FileOutputStream(file);
         wb.write(stream);
         stream.flush();
@@ -46,6 +57,54 @@ public class ExcelReport extends SimpleReport
         wb = new HSSFWorkbook();
         this.file = file;
         reportSheet = wb.createSheet("Report");
+        if(headerCellStyle == null)
+            headerCellStyle = createHeaderCellStyle();
+        if(dataCellStyle == null)
+            dataCellStyle = createDataCellStyle();
+    }
+
+    private HSSFCellStyle createDataCellStyle()
+    {
+        HSSFCellStyle style = wb.createCellStyle();
+        //границы
+        short border = HSSFCellStyle.BORDER_THIN;
+        style.setBorderBottom(border);
+        style.setBorderTop(border);
+        style.setBorderLeft(border);
+        style.setBorderRight(border);
+        // шрифты
+        HSSFFont font = wb.createFont();
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+        style.setFont(font);
+        style.setWrapText(true);
+        style.setAlignment(HSSFCellStyle.ALIGN_FILL);
+        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+
+        return style;
+    }
+
+    private HSSFCellStyle createHeaderCellStyle()
+    {
+        HSSFCellStyle style = wb.createCellStyle();
+        // закраска
+        style.setFillBackgroundColor(HSSFColor.BLACK.index);
+        style.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+        style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        //границы
+        short border = HSSFCellStyle.BORDER_THIN;
+        style.setBorderBottom(border);
+        style.setBorderTop(border);
+        style.setBorderLeft(border);
+        style.setBorderRight(border);
+        // шрифт
+        HSSFFont font = wb.createFont();
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        style.setFont(font);
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        style.setWrapText(true);
+
+        return style;
     }
 
     @Override
@@ -57,8 +116,15 @@ public class ExcelReport extends SimpleReport
         {
             HSSFCell cell = headRow.createCell(currCell);
             cell.setCellValue(header);
+            cell.setCellStyle(headerCellStyle);
             currCell++;
         }
+
+        CellRangeAddress headerRange = new CellRangeAddress(0, 0, 0, headers.size()-1);
+        RegionUtil.setBorderRight(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
+        RegionUtil.setBorderLeft(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
+        RegionUtil.setBorderTop(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
+        RegionUtil.setBorderBottom(HSSFBorderFormatting.BORDER_MEDIUM, headerRange, reportSheet, wb);
     }
 
     @Override
@@ -69,15 +135,25 @@ public class ExcelReport extends SimpleReport
     @Override
     protected void writeData(ArrayList data) throws InvocationTargetException, NoSuchMethodException, NoSuchFieldException, IllegalAccessException
     {
+        int start = currentRow;
+        int end = start + data.size() - 1;
+
         for (Object item : data)
         {
             HSSFRow row = reportSheet.createRow(currentRow++);
+
             int cellNum = 0;
             for (String field : fields)
             {
                 HSSFCell cell = row.createCell(cellNum++);
+                cell.setCellStyle(dataCellStyle);
                 cell.setCellValue(ReflectionHelp.getValue(item, field).toString());
             }
+            CellRangeAddress rowRange = new CellRangeAddress(start, end, 0, fields.size()-1);
+            RegionUtil.setBorderRight(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
+            RegionUtil.setBorderLeft(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
+            RegionUtil.setBorderTop(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
+            RegionUtil.setBorderBottom(HSSFBorderFormatting.BORDER_MEDIUM, rowRange, reportSheet, wb);
         }
     }
 }
