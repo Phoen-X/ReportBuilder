@@ -19,7 +19,7 @@ public enum Encoding {
         this.value = value;
     }
 
-    private String value;
+    private final String value;
 
     public String getValue()
     {

@@ -88,8 +88,6 @@ public class ReportTest
         {
             reportRows.add(row);
         }
-        
-        String header = reportRows.get(0);
 
         reader.close();
         repFile.delete();

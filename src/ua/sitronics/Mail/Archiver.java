@@ -16,7 +16,7 @@ import java.util.zip.ZipOutputStream;
  */
 public class Archiver
 {
-    ArrayList<File> files = new ArrayList<File>(1);
+    private ArrayList<File> files = new ArrayList<File>(1);
 
     public Archiver(ArrayList<File> files)
     {

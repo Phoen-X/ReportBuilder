@@ -21,10 +21,10 @@ import java.util.LinkedHashMap;
  */
 public class ExcelReport extends SimpleReport
 {
-    HSSFWorkbook wb;
-    HSSFSheet reportSheet;
-    File file;
-    int currentRow = 0;
+    private HSSFWorkbook wb;
+    private HSSFSheet reportSheet;
+    private File file;
+    private int currentRow = 0;
 
     public ExcelReport(LinkedHashMap<String, String> map)
     {

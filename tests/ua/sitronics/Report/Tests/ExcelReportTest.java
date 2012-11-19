@@ -21,7 +21,8 @@ import java.util.LinkedHashMap;
  * Date: 19.11.12
  * Time: 10:44
  */
-public class ExcelReportTest {
+public class ExcelReportTest
+{
     @Test
     public void testCreate() throws Exception
     {
