@@ -19,10 +19,7 @@ public class ArchiverTest extends TestCase
         System.out.println("ARCHIVER TEST");
         ArrayList<File> files = new ArrayList<File>(3);
         files.add(new File("C:\\1.txt"));
-        files.add(new File("C:\\2.txt"));
-        files.add(new File("C:\\3.txt"));
-        files.add(new File("C:\\1.jpg"));
-        files.add(new File("C:\\AMD\\Support\\12-2_vista_win7_64_dd_ccc\\Setup.exe"));
+        files.add(new File("C:\\AUTOBUILD"));
 
         Archiver archive = new Archiver(files);
         archive.create(new File("C:\\arch.zip"));
