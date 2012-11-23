@@ -1,6 +1,9 @@
 package ua.sitronics.Mail;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -45,13 +48,15 @@ public class Archiver
 		this.files = files;
 	}
 
-	public void create(File pathTo, int level) throws FileNotFoundException
+	public void create(File pathTo, int level) throws IOException
 	{
 		ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(pathTo));
 		zip.setLevel(level);
+		zip.flush();
+		zip.close();
 	}
 	
-	public void create(File pathTo) throws FileNotFoundException
+	public void create(File pathTo) throws IOException
 	{
 		create(pathTo, 0);
 	}
