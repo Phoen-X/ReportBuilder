@@ -52,8 +52,7 @@ public class Archiver
 	{
 		ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(pathTo));
 		zip.setLevel(level);
-		zip.flush();
-		zip.close();
+		create(zip);
 	}
 	
 	public void create(File pathTo) throws IOException
