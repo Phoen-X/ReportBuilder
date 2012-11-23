@@ -26,6 +26,7 @@ public class Archiver
     public Archiver(File file)
     {
         files.add(file);
+
     }
 
     public ArrayList<File> getFiles()

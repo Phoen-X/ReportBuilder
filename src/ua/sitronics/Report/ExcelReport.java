@@ -36,14 +36,6 @@ public class ExcelReport extends SimpleReport
     @Override
     protected void after() throws IOException
     {
-        for(int i = 0; i< headers.size(); i++)
-        {
-            /*reportSheet.autoSizeColumn(i);
-            if(reportSheet.getColumnWidth(i) > MAX_COL_WIDTH)
-                reportSheet.setColumnWidth(i, MAX_COL_WIDTH);
-            */
-        }
-
         FileOutputStream stream = new FileOutputStream(file);
         wb.write(stream);
         stream.flush();
@@ -128,8 +120,6 @@ public class ExcelReport extends SimpleReport
     @Override
     protected void writeData(ArrayList data) throws InvocationTargetException, NoSuchMethodException, NoSuchFieldException, IllegalAccessException
     {
-        int start = currentRow;
-        int end = start + data.size() - 1;
 
         for (Object item : data)
         {
